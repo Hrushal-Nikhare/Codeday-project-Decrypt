@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      color: #fff;
+      background-color: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    ul {
+      display: flex;
+    }
+
+    li {
+      list-style: none;
+      font-size: 100px;
+      font-weight: bold;
+      letter-spacing: 8px;
+    }
+
+    .fire li {
+      color: black;
+    }
+
+    .ice li {
+      color: white;
+    }
+
+    .wrapper:hover li {
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+    }
+
+    .wrapper:hover .fire li {
+      animation-name: fire-color;
+    }
+
+    .wrapper:hover .ice li {
+      animation-name: ice-color;
+    }
+
+    /* Animation delay for each letter */
+    li:nth-child(1) {
+      animation-delay: 0;
+    }
+
+    li:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    li:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    li:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    li:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+
+    #text {
+      color: #333;
+    }
+
+
+
+    /* Fire Animation */
+    @keyframes fire-color {
+      0% {
+        color: #801100;
+      }
+
+      20% {
+        color: #b62203;
+      }
+
+      40% {
+        color: #d73502;
+      }
+
+      60% {
+        color: #fc6400;
+      }
+
+      80% {
+        color: #ff7500;
+      }
+
+      100% {
+        color: #fac000;
+      }
+    }
+
+    /* Ice Animation */
+    @keyframes ice-color {
+      0% {
+        color: #ffffff;
+      }
+
+      25% {
+        color: #b9e8ea;
+      }
+
+      50% {
+        color: #86d6d8;
+      }
+
+      75% {
+        color: #3fd0d4;
+      }
+
+      100% {
+        color: #20c3d0;
+      }
+    }
+  </style>
+  <title>Choose Your Path</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+
+<body>
+
+  <h1 class="text-4xl">
+    Choose Your Path
+  </h1>
+  <br><br><br>
+
+  <div class="wrapper">
+    <ul class="fire">
+      <li>F</li>
+      <li>I</li>
+      <li>R</li>
+      <li>E</li>
+    </ul>
+  </div>
+  <h1>OR</h1>
+  <div class="wrapper">
+    <ul class="ice">
+      <li>I</li>
+      <li>C</li>
+      <li>E</li>
+    </ul>
+  </div>
+  <br><br><br>
+  <input type="text" id="text" placeholder="Choose Fire or Ice">
+
+  <script>
+    // if value of the input is fire, redirect to fire.html; if value is ice, redirect to ice.html;if value is savior, redirect to download main.py
+    document.getElementById('text').onkeyup = function () {
+      if (document.getElementById('text').value == 'fire') {
+        window.location.href = 'fire.html';
+      }
+      if (document.getElementById('text').value == 'ice') {
+        window.location.href = 'ice.html';
+      }
+      if (document.getElementById('text').value == 'savior') {
+        window.location.href = 'main.py';
+      }
+    }
+  </script>
+</body>
+
+</html>
