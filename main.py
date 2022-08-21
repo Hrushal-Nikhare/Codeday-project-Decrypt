@@ -1,21 +1,24 @@
 import os
 os.system("pip install ursina")
+# install ursina
 from ursina import *
-#pip install ursina
 
-
-
+# make the Players class
 class PlatformerController2d(Entity):
     def __init__(self, **kwargs):
         super().__init__()
 
         self.model = 'cube'
+        # make the player a cube
         self.origin_y = -.5
         self.scale_y = 2
         self.color = color.orange
+        # set the player's color to orange
         self.collider = 'box'
+        # set the player's collider to a box
 
         self.animator = Animator({'idle' : None, 'walk' : None, 'jump' : None})
+        # animations if required
         # self.animation_state_machine.state = 'jump'
         # self.idle_animation = None
         # self.walk_animation = None
@@ -24,6 +27,7 @@ class PlatformerController2d(Entity):
         # self.walk_animation = Animation(parent=self, texture='ursina_wink', color=color.red, origin_y=-.5, scale=(2,2), double_sided=True)
         # self.model = None
 
+        # Setup
         self.walk_speed = 8
         self.walking = False
         self.velocity = 0 # the walk diection is stored here. -1 for left and 1 for right.
@@ -38,11 +42,13 @@ class PlatformerController2d(Entity):
         self.traverse_target = scene     # by default, it will collide with everything except itself. you can change this to change the boxcast traverse target.
         self._start_fall_sequence = None # we need to store this so we can interrupt the fall call if we try to double jump.
 
+        # Checking if the player is on the ground.
         ray = boxcast(self.world_position, self.down, distance=10, ignore=(self, ), traverse_target=self.traverse_target, thickness=.9)
         if ray.hit:
             self.y = ray.world_point[1] + .01
         # camera.add_script(SmoothFollow(target=self, offset=[0,1,-30], speed=4))
 
+        # set the attributes of the class.
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -116,28 +122,39 @@ class PlatformerController2d(Entity):
 
 
     def input(self, key):
-        if key == 'space' or key == 'w':
+	    # Checking if the key is space or w and if it is, it will jump.
+        if key in ['space', 'w']:
             self.jump()
-
+        
+# Checking if the key is d and if it is, it will set the velocity to 1 and the scale_x to the original
+# scale_x.
         if key == 'd':
             self.velocity = 1
             self.scale_x = self._original_scale_x
+            
+# Checking if the key is d and if it is, it will set the velocity to 1 and the scale_x to the original
+# scale_x.
         if key == 'd up':
             self.velocity = -held_keys['a']
-
+            
+# Setting the velocity to -1.
         if key == 'a':
             self.velocity = -1
+# Checking if the key is a and if it is, it will set the velocity to -1.
         if key == 'a up':
             self.velocity = held_keys['d']
-
+# Checking if the key is d or a and if it is, it will set the scale_x to the original scale_x.
         if held_keys['d'] or held_keys['a']:
             self.scale_x = self._original_scale_x * self.velocity
 
 
     def jump(self):
+# Checking if the player is not on the ground and if the player has less than or equal to 1 jump left.
+# If it is, it will return.
         if not self.grounded and self.jumps_left <= 1:
             return
 
+# Killing the fall sequence.
         if self._start_fall_sequence:
             self._start_fall_sequence.kill()
 
@@ -145,6 +162,7 @@ class PlatformerController2d(Entity):
         if boxcast(self.position+(0,.1,0), self.up, distance=self.scale_y, thickness=.95, ignore=(self,), traverse_target=self.traverse_target).hit:
             return
 
+# Making a circle and making it fade out.
         if hasattr(self, 'y_animator'):
             self.y_animator.kill()
         self.jump_dust = Entity(model=Circle(), scale=.5, color=color.white33, position=self.position)
@@ -160,6 +178,9 @@ class PlatformerController2d(Entity):
         duration = self.jump_duration
         # check if we hit a ceiling and adjust the jump height accordingly
         hit_above = boxcast(self.position+(0,self.scale_y/2,0), self.up, distance=self.jump_height-(self.scale_y/2), thickness=.9, ignore=(self,))
+# Checking if the player hits the ceiling and if it does, it will set the target_y to the minimum of
+# the hit_above.world_point.y-self.scale_y and target_y. It will then try to set the duration to the
+# target_y divided by the self.y+self.jump_height. If it does not work, it will return an error.
         if hit_above.hit:
             target_y = min(hit_above.world_point.y-self.scale_y, target_y)
             try:
@@ -167,16 +188,23 @@ class PlatformerController2d(Entity):
             except ZeroDivisionError as e:
                 return e
 
+# Making the player jump.
         self.animate_y(target_y, duration, resolution=30, curve=curve.out_expo)
         self._start_fall_sequence = invoke(self.start_fall, delay=duration)
 
 
     def start_fall(self):
+        """
+        It pauses the y_animator, and sets jumping to False
+        """
         self.y_animator.pause()
         self.jumping = False
 
 
     def land(self):
+        """
+        If the player is in the air, then the player is no longer in the air.
+        """
         # print('land')
         self.air_time = 0
         self.jumps_left = self.max_jumps
@@ -186,10 +214,12 @@ class PlatformerController2d(Entity):
 
 if __name__ == '__main__':
     # window.vsync = False
+    # Making the game.
     app = Ursina()
     camera.orthographic = True
     camera.fov = 10
 
+# Creating the walls and ground for the game.
     ground = Entity(model='cube', color=color.white33, origin_y=.5, scale=(20, 10, 1), collider='box', y=18)
     wall = Entity(model='cube', color=color.azure, origin=(-.5,.5), scale=(5,10), x=10, y=.5, collider='box')
     wall_2 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=5, collider='box')
@@ -206,6 +236,12 @@ if __name__ == '__main__':
     wall_39 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1000, collider='box')
     # text = Text('https://bit.ly/3dOAbml', origin=(0,0))
     def input(key):
+        """
+        If the left mouse button is clicked, a text object is created that displays a link to the
+        documentation for the `collision` attribute
+        
+        :param key: The key that was pressed
+        """
         if key == 'left mouse down':
             popup_text = Text("https://bit.ly/3dOAbml", origin=(0,0))
             destroy(popup_text, delay=0.5)
@@ -214,8 +250,9 @@ if __name__ == '__main__':
             print(wall.collision)
 
 
+# Creating a player controller and making the camera follow the player controller.
     player_controller = PlatformerController2d(scale_y=2, jump_height=4, x=3, y=20)
     camera.add_script(SmoothFollow(target=player_controller, offset=[0,1,-30], speed=4))
-
+# Making the camera follow the player controller.
     EditorCamera()
     app.run()
