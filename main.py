@@ -1,4 +1,3 @@
-#download This file
 import os
 os.system("pip install ursina")
 # install ursina
@@ -225,30 +224,10 @@ if __name__ == '__main__':
     wall = Entity(model='cube', color=color.azure, origin=(-.5,.5), scale=(5,10), x=10, y=.5, collider='box')
     wall_2 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=5, collider='box')
     ceiling = Entity(model='cube', color=color.white33, origin_y=-.5, scale=(1, 1, 1), y=1, collider='box')
-    wall_3 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=100, collider='box')
-    wall_5 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=200, collider='box')
-    wall_4 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=300, collider='box')
-    wall_6 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=400, collider='box')
-    wall_7 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=500, collider='box')
-    wall_8 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=600, collider='box')
-    wall_9 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=700, collider='box')
-    wall_10 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=800, collider='box')
-    wall_31 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=900, collider='box')
-    wall_39 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1000, collider='box')
-    wall_40 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1100, collider='box')
-    wall_59 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1200, collider='box')
-    wall_69 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1300, collider='box')
-    wall_89 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1400, collider='box')
-    wall_99 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1500, collider='box')
-    wall_09 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1600, collider='box')
-    wall_019 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1700, collider='box')
-    wall_309 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1800, collider='box')
-    wall_309 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=1900, collider='box')
-    wall_329 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=2000, collider='box')
-    wall_359 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=2100, collider='box')
-    wall_369 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=2200, collider='box')
-    wall_389 = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=2300, collider='box')
-    # text = Text('https://bit.ly/3dOAbml', origin=(0,0))
+
+    # # text = Text('https://bit.ly/3dOAbml', origin=(0,0))
+    for i in range(100,100000,100):
+        wall_ = Entity(model='cube', color=color.white33, origin=(-.5,.5), scale=(5,10), x=10, y=i, collider='box')
     def input(key):
         """
         If the left mouse button is clicked, a text object is created that displays a link to the
